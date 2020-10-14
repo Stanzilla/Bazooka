@@ -36,7 +36,7 @@ local function makeColor(r, g, b, a)
 end
 
 local function colorToHex(color)
-    return ("%02x%02x%02x%02x"):format((color.a and color.a * 255 or 255), color.r*255, color.g*255, color.b*255)   
+    return ("%02x%02x%02x%02x"):format((color.a and color.a * 255 or 255), color.r*255, color.g*255, color.b*255)
 end
 
 local function getTexture(textureName, region, ...)
@@ -141,7 +141,7 @@ local BarDefaults = {
     textColor = makeColor(1.0, 0.82, 0),
     suffixColor = makeColor(0, 0.82, 0),
     pluginOpacity = 1.0,
-    
+
     attach = 'none',
     fitToContentWidth = false,
 
@@ -481,7 +481,7 @@ Bar.OnDragStop = function(frame)
     Bazooka.draggedFrame = nil
     frame:StopMovingOrSizing()
     frame:SetAlpha(1.0)
-    local attach, pos = self.db.attach, nil 
+    local attach, pos = self.db.attach, nil
     Bazooka:detachBar(self) -- double detach doesn't hurt (in case we move)
     if not Bazooka.locked then
         if self.isMoving then
@@ -550,7 +550,7 @@ Bar.OnMouseDown = function(frame, button, ...)
 end
 
 
--- BEGIN EnableOpacityWorkaround 
+-- BEGIN EnableOpacityWorkaround
 Bar.setAlphaByParts = function(frame, alpha)
     frame.bzkAlpha = alpha
     local self = frame.bzkBar
@@ -570,14 +570,14 @@ end
 Bar.getAlphaByParts = function(frame)
     return frame.bzkAlpha
 end
--- END EnableOpacityWorkaround 
+-- END EnableOpacityWorkaround
 
--- BEGIN EnableGradientWorkaround 
+-- BEGIN EnableGradientWorkaround
 Bar.fixGradientOnSizeChanged = function(frame, w, h)
     local self = frame.bzkBar
     self:setGradientBg()
 end
--- END EnableGradientWorkaround 
+-- END EnableGradientWorkaround
 
 Bar.initialOnUpdateFixFontMetricHack = function(frame)
     -- fix miscalculated font metrics
@@ -721,7 +721,7 @@ function Bar:enable(id, db)
     self.name = Bazooka:getBarName(id)
     self.db = db
     if not self.frame then
-        self.frame = CreateFrame("Frame", "BazookaBar_" .. id, UIParent)
+        self.frame = CreateFrame("Frame", "BazookaBar_" .. id, UIParent, BackdropTemplateMixin and "BackdropTemplate")
         self.frame.bzkBar = self
         self.frame:SetScript("OnUpdate", Bar.initialOnUpdateFixFontMetricHack)
         if EnableOpacityWorkaround then
@@ -1792,7 +1792,7 @@ end
 
 function Plugin:enable()
     if not self.frame then
-        self.frame = CreateFrame("Button", "BazookaPlugin_" .. self.name, UIParent)
+        self.frame = CreateFrame("Button", "BazookaPlugin_" .. self.name, UIParent, BackdropTemplateMixin and "BackdropTemplate")
         self.frame.bzkPlugin = self
         if EnableOpacityWorkaround then
             self.frame.bzkAlpha = self.frame:GetAlpha()
@@ -2514,7 +2514,7 @@ end
 
 function Bazooka:lock()
     self.locked = true
-    for i = 1, #self.ldbs do 
+    for i = 1, #self.ldbs do
         self.ldbs[i].icon = Icon
     end
     self:closeStaticDialog(BzkDialogDisablePlugin)

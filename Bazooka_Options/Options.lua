@@ -937,7 +937,7 @@ end
 local function comparePluginsByTitleDisabledLast(p1, p2)
     if p1.db.enabled then
         return not p2.db.enabled or p1:getTitle() < p2:getTitle()
-    else 
+    else
         return not p2.db.enabled and p1:getTitle() < p2:getTitle()
     end
 end
@@ -1143,7 +1143,7 @@ function PluginBulkHandler:autoApply(info, ...)
     for name, selected in pairs(self.selection) do
         if selected then
             local plugin = Bazooka.plugins[name]
-            if plugin then 
+            if plugin then
                 plugin[setter](plugin, info, ...)
             end
         end
@@ -1154,7 +1154,7 @@ function PluginBulkHandler:applyBulkSettings(info)
     for name, selected in pairs(self.selection) do
         if selected then
             local plugin = Bazooka.plugins[name]
-            if plugin then 
+            if plugin then
                 self:applyBulkSettingsTo(plugin)
                 if self.selectedOptions['enabled'] then
                     plugin:updateColoredTitle()
@@ -1559,7 +1559,7 @@ do
     self.optionsLoaded = true
 
     -- remove dummy options frame, ugly hack
-    if self.dummyOpts then 
+    if self.dummyOpts then
         for k, f in ipairs(INTERFACEOPTIONS_ADDONCATEGORIES) do
             if f == self.dummyOpts then
                 tremove(INTERFACEOPTIONS_ADDONCATEGORIES, k)
